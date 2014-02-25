@@ -47,7 +47,7 @@ If you've cloned this repo you can first `npm install` it, and then run `npm tes
 
 This was created as part of a game that [Jon](https://github.com/jf8073) and I are developing, and it's quite good for games where a lot of things will be happening at different rates and you need a simple API for managing it.
 
-You can also recreate the XKCD Frequency comic, like so: [Show me the demo](https://basicallydan.github.io/evented-loop/xkcd-example/).
+You can also recreate the XKCD Frequency comic, like so: [Show me the demo](http://basicallydan.github.io/evented-loop/xkcd-example/).
 
 # Contributions
 
