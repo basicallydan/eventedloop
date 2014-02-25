@@ -409,12 +409,12 @@ $('document').ready(function () {
 		var newDiv = $('<div class="event">' + e.name + '</div>').appendTo(eventsDiv);
 		loop.on(e.loop_seconds + 's', function () {
 			newDiv.animate({
-				opacity: 1
-			}, e.loop_seconds * 1000 * 0.3, function () {
+				color: '#dddddd'
+			}, Math.min(0.5, +e.loop_seconds) * 1000 * 0.3, function () {
 				$(this).animate({
-					opacity: 0
-				}, e.loop_seconds * 1000 * 0.3);
-			})
+					color: '#000000'
+				}, Math.min(0.5, +e.loop_seconds) * 1000 * 0.3);
+			});
 		});
 	});
 	loop.start();
