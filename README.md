@@ -5,7 +5,7 @@ An event-based loop class which can take arbitrary numbers of intervals and call
 
 It's very simple:
 
-```
+```js
 var loop = new EventedLoop();
 loop.on('20ms', function (e) {
   console.log('I did something at', e); // prints 'I did something at 20ms'
@@ -14,7 +14,7 @@ loop.on('20ms', function (e) {
 
 But wait, there's more! You can specify a bunch of different things to happen at different times, and they don't have to be milliseconds! (you can use `ms`, `s`, `m`, or `h`)
 
-```
+```js
 var loop = new EventedLoop();
 loop.on('2s', function (e) {
   console.log('Every 2 seconds I will run');
