@@ -1,6 +1,7 @@
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
 var intervalParser = /([0-9\.]+)(ms|s|m|h)?/;
+var root = global || window;
 
 // Lil bit of useful polyfill...
 if (typeof(Function.prototype.inherits) === 'undefined') {
@@ -30,8 +31,12 @@ function EventedLoop() {
 	this.listeningForFocus = false;
 	this.on('newListener', function (e) {
 		var intervalGroups = intervalParser.exec(e);
+		if (!intervalGroups) {
+			throw new Error('I don\'t understand that particular interval');
+		}
 		var intervalAmount = +intervalGroups[1];
 		var intervalType = intervalGroups[2] || 'ms';
+		var potentialIntervalLength;
 		if (intervalType === 's') {
 			intervalAmount = intervalAmount * 1000;
 		} else if (intervalType === 'm') {
@@ -50,7 +55,17 @@ function EventedLoop() {
 
 		this.intervalsToEmit[+intervalAmount] = _.union(this.intervalsToEmit[+intervalAmount] || [], [e]);
 
-		this.intervalLength = greatestCommonFactor(_.keys(this.intervalsToEmit));
+		potentialIntervalLength = greatestCommonFactor(_.keys(this.intervalsToEmit));
+
+		if (this.intervalLength) {
+			if (potentialIntervalLength !== this.intervalLength) {
+				// Looks like we need a new interval
+				this.intervalLength = potentialIntervalLength;
+				this.stop().start();
+			}
+		} else {
+			this.intervalLength = potentialIntervalLength;
+		}
 
 		this.maxTicks = _.max(_.map(_.keys(this.intervalsToEmit), function(a) { return +a; })) / this.intervalLength;
 
@@ -65,41 +80,48 @@ EventedLoop.prototype.tick = function () {
 	var milliseconds = this.currentTick * this.intervalLength;
 	_.each(this.intervalsToEmit, function (events, key) {
 		if (milliseconds % key === 0) {
-			_.each(events, function(e) { this.emit(e, e); }.bind(this));
+			_.each(events, function(e) { this.emit(e, e, key); }.bind(this));
 		}
 	}.bind(this));
 	this.currentTick += 1;
 	if (this.currentTick > this.maxTicks) {
 		this.currentTick = 1;
 	}
+	return this;
 };
 
 EventedLoop.prototype.start = function () {
 	if (!this.intervalLength) {
-		return console.warn('You haven\'t specified any interval callbacks. Use EventedLoop.on(\'500ms\', function () { ... }) to do so, and then you can start');
+		throw new Error('You haven\'t specified any interval callbacks. Use EventedLoop.on(\'500ms\', function () { ... }) to do so, and then you can start');
 	}
 	if (this.intervalId) {
-		return console.log('No need to start the loop again, it\'s already started.')
+		return console.log('No need to start the loop again, it\'s already started.');
 	}
 
 	this.intervalId = setInterval(this.tick.bind(this), this.intervalLength);
 
-	if (window && !this.listeningForFocus) {
-		window.addEventListener('focus', function() {
+	if (root && !this.listeningForFocus && root.addEventListener) {
+		root.addEventListener('focus', function() {
 			this.start();
 		}.bind(this));
 
-		window.addEventListener('blur', function() {
+		root.addEventListener('blur', function() {
 			this.stop();
 		}.bind(this));
 
 		this.listeningForFocus = true;
 	}
+	return this;
 };
 
 EventedLoop.prototype.stop = function () {
 	clearInterval(this.intervalId);
 	this.intervalId = undefined;
+	return this;
+};
+
+EventedLoop.prototype.isStarted = function () {
+	return !!this.intervalId;
 };
 
 module.exports = EventedLoop;

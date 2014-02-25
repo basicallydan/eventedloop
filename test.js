@@ -113,5 +113,70 @@ vows.describe('new EventedLoop').addBatch({
 		'we get 400': function (topic) {
 			assert.equal(topic, '400ms');
 		}
+	},
+	'when adding an event that doesn\'t make sense': {
+		topic: function () {
+			var loop = new EventedLoop();
+			return loop.on.bind(loop, 'on my birthday', function (e) {
+				this.callback(null, e);
+			}.bind(this));
+		},
+
+		'the on function throws an Error': function (topic) {
+			assert.throws(topic, Error);
+		}
+	},
+	'when starting the loop': {
+		topic: function () {
+			var loop = new EventedLoop();
+			loop.on('400ms', function (e) {});
+			loop.on('200ms', function (e) {});
+			loop.start();
+			return loop.isStarted();
+		},
+
+		'the loop has started': function (topic) {
+			assert.equal(topic, true);
+		}
+	},
+	'when starting the loop with no intervals': {
+		topic: function () {
+			var loop = new EventedLoop();
+			return loop.start;
+		},
+
+		'the start function throws an Error': function (topic) {
+			assert.throws(topic, Error);
+		}
+	},
+	'when adding a non-matching interval to an existing loop': {
+		topic: function () {
+			var originalIntervalId;
+			var loop = new EventedLoop();
+			loop.on('200ms', function (e) {});
+			loop.start();
+			originalIntervalId = loop.intervalId;
+			loop.on('100ms', function (e) {});
+			return loop.intervalId == originalIntervalId;
+		},
+
+		'the interval IDs are different': function (topic) {
+			assert.equal(topic, false);
+		}
+	},
+	'when adding a matching interval to an existing loop': {
+		topic: function () {
+			var originalIntervalId;
+			var loop = new EventedLoop();
+			loop.on('200ms', function (e) {});
+			loop.start();
+			originalIntervalId = loop.intervalId;
+			loop.on('400ms', function (e) {});
+			return loop.intervalId == originalIntervalId;
+		},
+
+		'the interval IDs are the same': function (topic) {
+			assert.equal(topic, true);
+		}
 	}
 }).export(module);

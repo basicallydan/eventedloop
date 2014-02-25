@@ -405,17 +405,39 @@ var events = [
 ];
 $('document').ready(function () {
 	var eventsDiv = $('.events');
-	$.each(events, function(i, e) {
-		var newDiv = $('<div class="event"><div class="text">' + e.name + '</div></div>').appendTo(eventsDiv);
-		loop.on(e.loop_seconds + 's', function () {
-			newDiv.animate({
-				color: '#000000'
-			}, Math.min(0.5, +e.loop_seconds) * 1000 * 0.3, function () {
-				$(this).animate({
-					color: '#dddddd'
-				}, Math.min(0.5, +e.loop_seconds) * 1000 * 0.3);
+
+	function addEvent(name, frequency) {
+		var newDiv = $('<div class="event"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
+		try {
+			loop.on(frequency, function (event, milliseconds) {
+				newDiv.animate({
+					color: '#000000'
+				}, Math.min(500, milliseconds) * 0.3, function () {
+					$(this).animate({
+						color: '#dddddd'
+					}, Math.min(500, milliseconds) * 0.3);
+				});
 			});
-		});
+		} catch (e) {
+			newDiv.remove();
+			alert(e.message);
+		}
+	}
+
+	$.each(events, function(i, e) {
+		addEvent(e.name, e.loop_seconds + 's');
 	});
 	loop.start();
+
+	$('.new-event-form').submit(function (e) {
+		e.preventDefault();
+		var name = $('#event-name').val();
+		var frequency = $('#event-frequency').val();
+
+		try {
+			addEvent(name, frequency);
+		} catch (e) {
+			alert(e.message);
+		}
+	});
 });
