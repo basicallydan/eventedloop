@@ -4,7 +4,7 @@
   "description": "An event-based loop class which can take arbitrary numbers of intervals and callbacks",
   "main": "./main.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "vows test.js --spec"
   },
   "keywords": [
     "loop",
@@ -21,9 +21,8 @@
     } 
   ],
   "files": [
-    "example-apis",
-    "index.js",
-    "lib"
+    "test.js",
+    "main.js"
   ],
   "repository": {
     "type": "git",
