@@ -1,6 +1,6 @@
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
-var intervalParser = /([0-9]+)(ms|s|m|h)?/;
+var intervalParser = /([0-9\.]+)(ms|s|m|h)?/;
 
 // Lil bit of useful polyfill...
 if (typeof(Function.prototype.inherits) === 'undefined') {

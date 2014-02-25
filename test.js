@@ -39,6 +39,18 @@ vows.describe('new EventedLoop').addBatch({
 			assert.equal(topic, 2000);
 		}
 	},
+	'when setting an interval with a decimal': {
+		topic: function () {
+			var loop = new EventedLoop();
+			loop.on('0.2s', function () {});
+			loop.on('0.1s', function () {});
+			return loop.intervalLength;
+		},
+
+		'we get 100ms': function (topic) {
+			assert.equal(topic, 100);
+		}
+	},
 	'when going over one tick': {
 		topic: function () {
 			var loop = new EventedLoop();
