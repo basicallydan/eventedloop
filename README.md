@@ -33,7 +33,7 @@ You can do as many as you like, but I highly recommend you take it easy and **us
 
 # Install
 
-It's not on NPM yet, I want to test it in the field a bit first and add a few new features, so you'll be installing it directly from GitHub.
+It's not on NPM yet, I want to test it in the field a bit first and add a few new features, so you'll be installing it directly from GitHub. If you are doing this on the front-end I would highly recommend [Browserify](http://browserify.org/) for using this library.
 
 ```
 npm install --save git://github.com/basicallydan/evented-loop#master
