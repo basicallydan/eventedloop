@@ -1,0 +1,23 @@
+{
+  "name": "evented-loop",
+  "version": "0.0.1",
+  "description": "An event-based loop class which can take arbitrary numbers of intervals and callbacks",
+  "main": "./main.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "loop",
+    "setinterval",
+    "game",
+    "loop"
+  ],
+  "author": "Daniel Hough <daniel.hough@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "underscore": "~1.6.0"
+  },
+  "devDependencies": {
+    "vows": "~0.7.0"
+  }
+}
