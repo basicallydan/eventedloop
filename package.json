@@ -1,6 +1,6 @@
 {
   "name": "evented-loop",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An event-based loop class which can take arbitrary numbers of intervals and callbacks",
   "main": "./main.js",
   "scripts": {
@@ -13,6 +13,22 @@
     "loop"
   ],
   "author": "Daniel Hough <daniel.hough@gmail.com>",
+  "contributors": [ 
+    {
+      "name": "Daniel Hough",
+      "email": "daniel.hough@gmail.com",
+      "url": "http://danielhough.co.uk"
+    } 
+  ],
+  "files": [
+    "example-apis",
+    "index.js",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:basicallydan/evented-loop.git"
+  },
   "license": "MIT",
   "dependencies": {
     "underscore": "~1.6.0"
