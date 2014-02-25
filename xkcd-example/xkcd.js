@@ -409,10 +409,10 @@ $('document').ready(function () {
 		var newDiv = $('<div class="event">' + e.name + '</div>').appendTo(eventsDiv);
 		loop.on(e.loop_seconds + 's', function () {
 			newDiv.animate({
-				color: '#dddddd'
+				color: '#000000'
 			}, Math.min(0.5, +e.loop_seconds) * 1000 * 0.3, function () {
 				$(this).animate({
-					color: '#000000'
+					color: '#dddddd'
 				}, Math.min(0.5, +e.loop_seconds) * 1000 * 0.3);
 			});
 		});
