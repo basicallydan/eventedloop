@@ -3,7 +3,15 @@ var loop = new EventedLoop();
 
 var events = [
 	{
-		"name":"birth",
+		"name":"heartbeat",
+		"loop_seconds":0.86,
+		"per_hour":4186.05,
+		"needs_adj":"*",
+		"loop_seconds_adj":0.96,
+		"per_hour_adj":3750.00
+	},
+	{
+		"name":"one birth",
 		"loop_seconds":0.24,
 		"per_hour":15000.00,
 		"needs_adj":"*",
@@ -11,12 +19,116 @@ var events = [
 		"per_hour_adj":10588.24
 	},
 	{
-		"name":"death",
+		"name":"one death",
 		"loop_seconds":0.56,
 		"per_hour":6428.57,
 		"needs_adj":"*",
 		"loop_seconds_adj":0.66,
 		"per_hour_adj":5454.55
+	},
+	{
+		"name":"someone edits wikipedia",
+		"loop_seconds":0.67,
+		"per_hour":5373.13,
+		"needs_adj":"*",
+		"loop_seconds_adj":0.77,
+		"per_hour_adj":4675.32
+	},
+	{
+		"name":"someone buys a vibrator",
+		"loop_seconds":2.99,
+		"per_hour":1204.01,
+		"needs_adj":"",
+		"loop_seconds_adj":2.99,
+		"per_hour_adj":1204.01
+	},
+	{
+		"name":"car_china",
+		"loop_seconds":1.89,
+		"per_hour":1904.76,
+		"needs_adj":"*",
+		"loop_seconds_adj":1.99,
+		"per_hour_adj":1809.05
+	},
+	{
+		"name":"car_japan",
+		"loop_seconds":4.01,
+		"per_hour":897.76,
+		"needs_adj":"",
+		"loop_seconds_adj":4.01,
+		"per_hour_adj":897.76
+	},
+	{
+		"name":"car_germany",
+		"loop_seconds":5.80,
+		"per_hour":620.69,
+		"needs_adj":"",
+		"loop_seconds_adj":5.80,
+		"per_hour_adj":620.69
+	},
+	{
+		"name":"car_us",
+		"loop_seconds":6.95,
+		"per_hour":517.99,
+		"needs_adj":"",
+		"loop_seconds_adj":6.95,
+		"per_hour_adj":517.99
+	},
+	{
+		"name":"car_elsewhere",
+		"loop_seconds":1.03,
+		"per_hour":3495.15,
+		"needs_adj":"*",
+		"loop_seconds_adj":1.13,
+		"per_hour_adj":3185.84
+	},
+	{
+		"name":"earthquake (magnitude 1)",
+		"loop_seconds":2.43,
+		"per_hour":1481.48,
+		"needs_adj":"",
+		"loop_seconds_adj":2.43,
+		"per_hour_adj":1481.48
+	},
+	{
+		"name":"earthquake (magnitude 2)",
+		"loop_seconds":24.26,
+		"per_hour":148.39,
+		"needs_adj":"",
+		"loop_seconds_adj":24.26,
+		"per_hour_adj":148.39
+	},
+	{
+		"name":"earthquake (magnitude 3)",
+		"loop_seconds":242.60,
+		"per_hour":14.84,
+		"needs_adj":"",
+		"loop_seconds_adj":242.60,
+		"per_hour_adj":14.84
+	},
+	{
+		"name":"earthquake (magnitude 4)",
+		"loop_seconds":2426.00,
+		"per_hour":1.48,
+		"needs_adj":"",
+		"loop_seconds_adj":2426.00,
+		"per_hour_adj":1.48
+	},
+	{
+		"name":"a member of the uk parliament flushes a toilet",
+		"loop_seconds":10.06,
+		"per_hour":357.85,
+		"needs_adj":"",
+		"loop_seconds_adj":10.06,
+		"per_hour_adj":357.85
+	},
+	{
+		"name":"a european union resident has their first kiss",
+		"loop_seconds":5.53,
+		"per_hour":650.99,
+		"needs_adj":"",
+		"loop_seconds_adj":5.53,
+		"per_hour_adj":650.99
 	},
 	{
 		"name":"domain",
@@ -25,14 +137,6 @@ var events = [
 		"needs_adj":"*",
 		"loop_seconds_adj":0.74,
 		"per_hour_adj":4864.86
-	},
-	{
-		"name":"wikipedia",
-		"loop_seconds":0.67,
-		"per_hour":5373.13,
-		"needs_adj":"*",
-		"loop_seconds_adj":0.77,
-		"per_hour_adj":4675.32
 	},
 	{
 		"name":"wedding",
@@ -49,14 +153,6 @@ var events = [
 		"needs_adj":"*",
 		"loop_seconds_adj":0.93,
 		"per_hour_adj":3870.97
-	},
-	{
-		"name":"heartbeat",
-		"loop_seconds":0.86,
-		"per_hour":4186.05,
-		"needs_adj":"*",
-		"loop_seconds_adj":0.96,
-		"per_hour_adj":3750.00
 	},
 	{
 		"name":"turnsignal2",
@@ -89,14 +185,6 @@ var events = [
 		"needs_adj":"*",
 		"loop_seconds_adj":1.04,
 		"per_hour_adj":3461.54
-	},
-	{
-		"name":"car_elsewhere",
-		"loop_seconds":1.03,
-		"per_hour":3495.15,
-		"needs_adj":"*",
-		"loop_seconds_adj":1.13,
-		"per_hour_adj":3185.84
 	},
 	{
 		"name":"phoenixshoes",
@@ -163,14 +251,6 @@ var events = [
 		"per_hour_adj":1875.00
 	},
 	{
-		"name":"car_china",
-		"loop_seconds":1.89,
-		"per_hour":1904.76,
-		"needs_adj":"*",
-		"loop_seconds_adj":1.99,
-		"per_hour_adj":1809.05
-	},
-	{
 		"name":"phoenix",
 		"loop_seconds":2.05,
 		"per_hour":1756.10,
@@ -187,14 +267,6 @@ var events = [
 		"per_hour_adj":1747.57
 	},
 	{
-		"name":"earthquake1",
-		"loop_seconds":2.43,
-		"per_hour":1481.48,
-		"needs_adj":"",
-		"loop_seconds_adj":2.43,
-		"per_hour_adj":1481.48
-	},
-	{
 		"name":"keys",
 		"loop_seconds":2.43,
 		"per_hour":1481.48,
@@ -209,22 +281,6 @@ var events = [
 		"needs_adj":"",
 		"loop_seconds_adj":2.69,
 		"per_hour_adj":1338.29
-	},
-	{
-		"name":"vibrator",
-		"loop_seconds":2.99,
-		"per_hour":1204.01,
-		"needs_adj":"",
-		"loop_seconds_adj":2.99,
-		"per_hour_adj":1204.01
-	},
-	{
-		"name":"car_japan",
-		"loop_seconds":4.01,
-		"per_hour":897.76,
-		"needs_adj":"",
-		"loop_seconds_adj":4.01,
-		"per_hour_adj":897.76
 	},
 	{
 		"name":"facebook",
@@ -251,36 +307,12 @@ var events = [
 		"per_hour_adj":761.10
 	},
 	{
-		"name":"kiss",
-		"loop_seconds":5.53,
-		"per_hour":650.99,
-		"needs_adj":"",
-		"loop_seconds_adj":5.53,
-		"per_hour_adj":650.99
-	},
-	{
-		"name":"car_germany",
-		"loop_seconds":5.80,
-		"per_hour":620.69,
-		"needs_adj":"",
-		"loop_seconds_adj":5.80,
-		"per_hour_adj":620.69
-	},
-	{
 		"name":"house",
 		"loop_seconds":6.22,
 		"per_hour":578.78,
 		"needs_adj":"",
 		"loop_seconds_adj":6.22,
 		"per_hour_adj":578.78
-	},
-	{
-		"name":"car_us",
-		"loop_seconds":6.95,
-		"per_hour":517.99,
-		"needs_adj":"",
-		"loop_seconds_adj":6.95,
-		"per_hour_adj":517.99
 	},
 	{
 		"name":"dogbite",
@@ -297,14 +329,6 @@ var events = [
 		"needs_adj":"",
 		"loop_seconds_adj":7.79,
 		"per_hour_adj":462.13
-	},
-	{
-		"name":"parliament_toilet",
-		"loop_seconds":10.06,
-		"per_hour":357.85,
-		"needs_adj":"",
-		"loop_seconds_adj":10.06,
-		"per_hour_adj":357.85
 	},
 	{
 		"name":"dog",
@@ -339,14 +363,6 @@ var events = [
 		"per_hour_adj":156.52
 	},
 	{
-		"name":"earthquake2",
-		"loop_seconds":24.26,
-		"per_hour":148.39,
-		"needs_adj":"",
-		"loop_seconds_adj":24.26,
-		"per_hour_adj":148.39
-	},
-	{
 		"name":"bike",
 		"loop_seconds":24.93,
 		"per_hour":144.40,
@@ -379,22 +395,6 @@ var events = [
 		"per_hour_adj":20.00
 	},
 	{
-		"name":"earthquake3",
-		"loop_seconds":242.60,
-		"per_hour":14.84,
-		"needs_adj":"",
-		"loop_seconds_adj":242.60,
-		"per_hour_adj":14.84
-	},
-	{
-		"name":"earthquake4",
-		"loop_seconds":2426.00,
-		"per_hour":1.48,
-		"needs_adj":"",
-		"loop_seconds_adj":2426.00,
-		"per_hour_adj":1.48
-	},
-	{
 		"name":"oldfaithful",
 		"loop_seconds":5640.00,
 		"per_hour":0.64,
@@ -406,7 +406,7 @@ var events = [
 $('document').ready(function () {
 	var eventsDiv = $('.events');
 	$.each(events, function(i, e) {
-		var newDiv = $('<div class="event">' + e.name + '</div>').appendTo(eventsDiv);
+		var newDiv = $('<div class="event"><div class="text">' + e.name + '</div></div>').appendTo(eventsDiv);
 		loop.on(e.loop_seconds + 's', function () {
 			newDiv.animate({
 				color: '#000000'
