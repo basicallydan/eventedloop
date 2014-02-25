@@ -10,6 +10,18 @@ if (typeof(Function.prototype.inherits) === 'undefined') {
 	};
 }
 
+if (typeof(Array.prototype.removeOne) === 'undefined') {
+	Array.prototype.removeOne = function() {
+		var what, a = arguments, L = a.length, ax;
+		while (L && this.length) {
+			what = a[--L];
+			while ((ax = this.indexOf(what)) !== -1) {
+				return this.splice(ax, 1);
+			}
+		}
+	};
+}
+
 function greatestCommonFactor(intervals) {
 	var sumOfModuli = 1;
 	var interval = _.min(intervals);
@@ -22,6 +34,32 @@ function greatestCommonFactor(intervals) {
 	return interval;
 }
 
+function parseEvent(e) {
+	var intervalGroups = intervalParser.exec(e);
+	if (!intervalGroups) {
+		throw new Error('I don\'t understand that particular interval');
+	}
+	var intervalAmount = +intervalGroups[1];
+	var intervalType = intervalGroups[2] || 'ms';
+	if (intervalType === 's') {
+		intervalAmount = intervalAmount * 1000;
+	} else if (intervalType === 'm') {
+		intervalAmount = intervalAmount * 1000 * 60;
+	} else if (intervalType === 'h') {
+		intervalAmount = intervalAmount * 1000 * 60 * 60;
+	} else if (!!intervalType && intervalType !== 'ms') {
+		throw new Error('You can only specify intervals of ms, s, m, or h');
+	}
+	if (intervalAmount < 10 || intervalAmount % 10 !== 0) {
+		// We only deal in 10's of milliseconds for simplicity
+		throw new Error('You can only specify 10s of milliseconds, trust me on this one');
+	}
+	return {
+		amount:intervalAmount,
+		type:intervalType
+	};
+}
+
 function EventedLoop() {
 	this.intervalId = undefined;
 	this.intervalLength = undefined;
@@ -29,53 +67,59 @@ function EventedLoop() {
 	this.currentTick = 1;
 	this.maxTicks = 0;
 	this.listeningForFocus = false;
-	this.on('newListener', function (e) {
-		var intervalGroups = intervalParser.exec(e);
-		if (!intervalGroups) {
-			throw new Error('I don\'t understand that particular interval');
-		}
-		var intervalAmount = +intervalGroups[1];
-		var intervalType = intervalGroups[2] || 'ms';
-		var potentialIntervalLength;
-		if (intervalType === 's') {
-			intervalAmount = intervalAmount * 1000;
-		} else if (intervalType === 'm') {
-			intervalAmount = intervalAmount * 1000 * 60;
-		} else if (intervalType === 'h') {
-			intervalAmount = intervalAmount * 1000 * 60 * 60;
-		} else if (!!intervalType && intervalType !== 'ms') {
-			console.warn('You can only specify intervals of ms, s, m, or h');
-			return false;
-		}
-		if (intervalAmount < 10 || intervalAmount % 10 !== 0) {
-			// We only deal in 10's of milliseconds for simplicity
-			console.warn('You can only specify 10s of milliseconds, trust me on this one');
-			return false;
-		}
 
-		this.intervalsToEmit[+intervalAmount] = _.union(this.intervalsToEmit[+intervalAmount] || [], [e]);
-
-		potentialIntervalLength = greatestCommonFactor(_.keys(this.intervalsToEmit));
+	// Private method
+	var determineIntervalLength = function () {
+		var potentialIntervalLength = greatestCommonFactor(_.keys(this.intervalsToEmit));
+		var changed = false;
 
 		if (this.intervalLength) {
 			if (potentialIntervalLength !== this.intervalLength) {
 				// Looks like we need a new interval
 				this.intervalLength = potentialIntervalLength;
-				this.stop().start();
+				changed = true;
 			}
 		} else {
 			this.intervalLength = potentialIntervalLength;
 		}
 
 		this.maxTicks = _.max(_.map(_.keys(this.intervalsToEmit), function(a) { return +a; })) / this.intervalLength;
+		return changed;
+	}.bind(this);
 
-		// We assume that they mean ms if they don't specify
-		// console.log('Now emitting event every', intervalAmount, 'milliseconds and the interval length is', this.intervalLength);
+	this.on('newListener', function (e) {
+		if (e === 'removeListener' || e === 'newListener') return; // We don't care about that one
+		var intervalInfo = parseEvent(e);
+		var intervalAmount = intervalInfo.amount;
+
+		this.intervalsToEmit[+intervalAmount] = _.union(this.intervalsToEmit[+intervalAmount] || [], [e]);
+		
+		if (determineIntervalLength() && this.isStarted()) {
+			this.stop().start();
+		}
+	});
+
+	this.on('removeListener', function (e) {
+		if (EventEmitter.listenerCount(this, e) > 0) return;
+		var intervalInfo = parseEvent(e);
+		var intervalAmount = intervalInfo.amount;
+
+		var removedEvent = this.intervalsToEmit[+intervalAmount].removeOne(e);
+		if (this.intervalsToEmit[+intervalAmount].length === 0) {
+			delete this.intervalsToEmit[+intervalAmount];
+		}
+		console.log('Determining interval length after removal of', removedEvent);
+		determineIntervalLength();
+
+		if (determineIntervalLength() && this.isStarted()) {
+			this.stop().start();
+		}
 	});
 }
 
 EventedLoop.inherits(EventEmitter);
 
+// Public methods
 EventedLoop.prototype.tick = function () {
 	var milliseconds = this.currentTick * this.intervalLength;
 	_.each(this.intervalsToEmit, function (events, key) {

@@ -405,6 +405,7 @@ var events = [
 ];
 $('document').ready(function () {
 	var eventsDiv = $('.events');
+	var foreignEvents = [];
 
 	function addEvent(name, frequency) {
 		var newDiv = $('<div class="event"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
@@ -424,6 +425,36 @@ $('document').ready(function () {
 		}
 	}
 
+	function addForeignEvent(name, frequency) {
+		var newDiv = $('<div class="foreign event" title="This event came from another user"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
+		var cb = function (event, milliseconds) {
+			newDiv.animate({
+				color: '#002eb4'
+			}, Math.min(500, milliseconds) * 0.3, function () {
+				$(this).animate({
+					color: '#a2a5b4'
+				}, Math.min(500, milliseconds) * 0.3);
+			});
+		};
+		try {
+			loop.on(frequency, cb);
+			foreignEvents.push({
+				eventKey: event,
+				callback: cb,
+				element: newDiv
+			});
+		} catch (e) {
+			newDiv.remove();
+			alert(e.message);
+		}
+	}
+
+	function removeOldestForeignEvent() {
+		var oldestEvent = foreignEvents.shift();
+		loop.removeListener(oldestEvent.eventKey, oldestEvent.callback);
+		oldestEvent.element.remove();
+	}
+
 	$.each(events, function(i, e) {
 		addEvent(e.name, e.loop_seconds + 's');
 	});
@@ -436,8 +467,8 @@ $('document').ready(function () {
 
 		try {
 			addEvent(name, frequency);
-		} catch (e) {
-			alert(e.message);
+		} catch (error) {
+			alert(error.message);
 		}
 	});
 });

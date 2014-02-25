@@ -114,6 +114,21 @@ vows.describe('new EventedLoop').addBatch({
 			assert.equal(topic, '400ms');
 		}
 	},
+	'when an interval is removed': {
+		topic: function () {
+			var loop = new EventedLoop();
+			var cbToRemove = function (e) {};
+			loop.on('400ms', function (e) {});
+			loop.on('400ms', function (e) {});
+			loop.on('200ms', cbToRemove);
+			loop.removeListener('200ms', cbToRemove);
+			return loop.intervalLength;
+		},
+
+		'the interval': function (topic) {
+			assert.equal(topic, 400);
+		}
+	},
 	'when adding an event that doesn\'t make sense': {
 		topic: function () {
 			var loop = new EventedLoop();
@@ -137,6 +152,18 @@ vows.describe('new EventedLoop').addBatch({
 
 		'the loop has started': function (topic) {
 			assert.equal(topic, true);
+		}
+	},
+	'when not starting the loop': {
+		topic: function () {
+			var loop = new EventedLoop();
+			loop.on('400ms', function (e) {});
+			loop.on('200ms', function (e) {});
+			return loop.isStarted();
+		},
+
+		'the loop has not started': function (topic) {
+			assert.equal(topic, false);
 		}
 	},
 	'when starting the loop with no intervals': {
