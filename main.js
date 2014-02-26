@@ -168,4 +168,6 @@ EventedLoop.prototype.isStarted = function () {
 	return !!this.intervalId;
 };
 
+EventedLoop.prototype.every = EventedLoop.prototype.on;
+
 module.exports = EventedLoop;

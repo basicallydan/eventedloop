@@ -169,6 +169,8 @@ EventedLoop.prototype.isStarted = function () {
 	return !!this.intervalId;
 };
 
+EventedLoop.prototype.every = EventedLoop.prototype.on;
+
 module.exports = EventedLoop;}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"events":4,"underscore":2}],2:[function(require,module,exports){
 //     Underscore.js 1.6.0
@@ -1927,7 +1929,7 @@ $('document').ready(function () {
 	function addEvent(name, frequency) {
 		var newDiv = $('<div class="event"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
 		try {
-			loop.on(frequency, function (event, milliseconds) {
+			loop.every(frequency, function (event, milliseconds) {
 				newDiv.animate({
 					color: '#000000'
 				}, Math.min(500, milliseconds) * 0.3, function () {

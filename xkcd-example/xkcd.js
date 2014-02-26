@@ -409,7 +409,7 @@ $('document').ready(function () {
 	function addEvent(name, frequency) {
 		var newDiv = $('<div class="event"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
 		try {
-			loop.on(frequency, function (event, milliseconds) {
+			loop.every(frequency, function (event, milliseconds) {
 				newDiv.animate({
 					color: '#000000'
 				}, Math.min(500, milliseconds) * 0.3, function () {

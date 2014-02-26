@@ -10,7 +10,8 @@
     "loop",
     "setinterval",
     "game",
-    "loop"
+    "loop",
+    "interval"
   ],
   "author": "Daniel Hough <daniel.hough@gmail.com>",
   "contributors": [ 

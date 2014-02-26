@@ -51,6 +51,17 @@ vows.describe('new EventedLoop').addBatch({
 			assert.equal(topic, 100);
 		}
 	},
+	'when setting an event using .every()': {
+		topic: function () {
+			var loop = new EventedLoop();
+			loop.every('0.2s', function () {});
+			return loop.intervalLength;
+		},
+
+		'we get 100ms': function (topic) {
+			assert.equal(topic, 200);
+		}
+	},
 	'when going over one tick': {
 		topic: function () {
 			var loop = new EventedLoop();
