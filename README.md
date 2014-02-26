@@ -6,7 +6,7 @@ An event-based loop class which can take arbitrary numbers of intervals/callback
 It's very simple:
 
 ```js
-var EventedLoop = require('eventedloop');
+var EventedLoop = require('eventedloop'); // Only relevant if you're using Node or Browserify
 var loop = new EventedLoop();
 loop.every('20ms', function (e) {
   console.log('I did something at', e); // prints 'I did something at 20ms'
@@ -17,7 +17,7 @@ loop.start();
 But wait, there's more! You can specify a bunch of different things to happen at different times, and they don't have to be milliseconds! (you can use `ms`, `s`, `m`, or `h`)
 
 ```js
-var EventedLoop = require('eventedloop');
+var EventedLoop = require('eventedloop'); // Only relevant if you're using Node or Browserify
 var loop = new EventedLoop();
 loop.every('2s', function (e) {
   console.log('Every 2 seconds I will run');
