@@ -22,8 +22,8 @@
     } 
   ],
   "files": [
-    "test.js",
-    "main.js"
+    "lib/main.js",
+    "lib/LICENCE"
   ],
   "repository": {
     "type": "git",
