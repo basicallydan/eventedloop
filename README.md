@@ -11,6 +11,7 @@ var loop = new EventedLoop();
 loop.every('20ms', function (e) {
   console.log('I did something at', e); // prints 'I did something at 20ms'
 });
+loop.start();
 ```
 
 But wait, there's more! You can specify a bunch of different things to happen at different times, and they don't have to be milliseconds! (you can use `ms`, `s`, `m`, or `h`)
@@ -36,17 +37,13 @@ loop.every('2m', function (e) {
 
 You can do as many as you like, but I highly recommend you take it easy an don't overdo it. In newer versions of Chrome, 50 intervals seems to have no detrimental effects, but of course it depends on what is happening in the callback. An example of a situation with 50 intervals is available in [this demo](https://basicallydan.github.io/eventedloop/xkcd-example/).
 
-## All methods
+## API
 
-`loop.every(interval, callback)` - Tell the loop to execute the `callback` regularly at whatever time was specified in `interval`, which can either be milliseconds (e.g. `2ms`), seconds (e.g. `5s`), minutes (e.g. `10m`), or hours (`1h`)
-
-`loop.start()` - Starts the loop.
-
-`loop.stop()` - Stops the loop. Will not clear out all the intervals, this can be done with the inherited method from `EventEmitter`, `loop.removeAllListeners`.
-
-`loop.tick()` - This will cause a single iteration at the greatest common factor of time for all the given intervals, i.e., if you have two intervals at `50ms` and `75ms`, a single tick will be `25ms`. This is useful for debugging, and for mimicing slowed-down time.
-
-`loop.on` - Does the same thing as `every`. Inherited from `EventEmitter`.
+* `loop.every(interval, callback)` - Tell the loop to execute the `callback` regularly at whatever time was specified in `interval`, which can either be milliseconds (e.g. `2ms`), seconds (e.g. `5s`), minutes (e.g. `10m`), or hours (`1h`)
+* `loop.start()` - Starts the loop.
+* `loop.stop()` - Stops the loop. Will not clear out all the intervals, this can be done with the inherited method from `EventEmitter`, `loop.removeAllListeners`.
+* `loop.tick()` - This will cause a single iteration at the greatest common factor of time for all the given intervals, i.e., if you have two intervals at `50ms` and `75ms`, a single tick will be `25ms`. This is useful for debugging, and for mimicing slowed-down time.
+* `loop.on()` - Does the same thing as `every`. Inherited from `EventEmitter`.
 
 EventedLoop in fact inherits all the methods from [`EventEmitter`](http://nodejs.org/api/events.html).
 
