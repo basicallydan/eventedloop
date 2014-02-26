@@ -1,10 +1,10 @@
 {
-  "name": "evented-loop",
-  "version": "0.3.0",
-  "description": "An event-based loop class which can take arbitrary numbers of intervals and callbacks",
-  "main": "./main.js",
+  "name": "eventedloop",
+  "version": "0.4.0",
+  "description": "An event-based loop creator which can take arbitrary numbers of intervals and callbacks",
+  "main": "./lib/main.js",
   "scripts": {
-    "test": "vows test.js --spec"
+    "test": "vows lib/test.js --spec"
   },
   "keywords": [
     "loop",
@@ -27,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:basicallydan/evented-loop.git"
+    "url": "git@github.com:basicallydan/eventedloop.git"
   },
   "license": "MIT",
   "dependencies": {

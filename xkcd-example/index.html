@@ -70,7 +70,7 @@
 <body>
 	<div class="events">
 		<h1>XKCD's <em>Frequency</em> in HTML, CSS and JavaScript.</h1>
-		<p>Using the open-source JavaScript library <strong><a href="https://github.com/basicallydan/evented-loop/" target="_blank">evented-loop</a></strong>, and the data collected by the wonderful <a href="http://notebooks.jsvine.com/reverse-engineering-xkcd-frequency/" target="_blank">Jeremy Singer-Vine</a>, it was easy to recreate <a href="http://xkcd.com/1331/">Frequency</a>, one of Randall Munroe's XKCD comics. The font is from <a href="https://github.com/shreyankg/xkcd-desktop" target="_blank">here</a>.<p>
+		<p>Using the open-source JavaScript library <strong><a href="https://github.com/basicallydan/eventedloop/" target="_blank">eventedloop</a></strong>, and the data collected by the wonderful <a href="http://notebooks.jsvine.com/reverse-engineering-xkcd-frequency/" target="_blank">Jeremy Singer-Vine</a>, it was easy to recreate <a href="http://xkcd.com/1331/">Frequency</a>, one of Randall Munroe's XKCD comics. The font is from <a href="https://github.com/shreyankg/xkcd-desktop" target="_blank">here</a>.<p>
 	</div>
 	<form class="new-event-form">
 		<p>Do you know of an event that happens regularly?</p>
@@ -79,11 +79,12 @@
 		<label for="event-frequency">Frequency</label>
 		<input type="text" id="event-frequency" placeholder="5s/1m/600ms/1h" />
 		<input type="submit" value="Frequent this event." />
-		<p>Take a look at the <strong><a href="https://github.com/basicallydan/evented-loop/blob/master/xkcd-example/xkcd.js#L406" target="_blank">source for this script</a></strong>. Wanna fork <strong><a href="https://github.com/basicallydan/evented-loop/" target="_blank">evented-loop</a></strong>?</p>
+		<p>Take a look at the <strong><a href="https://github.com/basicallydan/eventedloop/blob/master/xkcd-example/xkcd.js#L406" target="_blank">source for this script</a></strong>. Wanna fork <strong><a href="https://github.com/basicallydan/eventedloop/" target="_blank">eventedloop</a></strong>?</p>
 	</form>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="bundle.js"></script>
+	<script type="text/javascript" src="../eventedloop.min.js"></script>
+	<script type="text/javascript" src="xkcd.js"></script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
