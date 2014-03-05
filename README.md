@@ -74,7 +74,7 @@ Download `eventedloop.min.js` or `eventedloop.js` and stick it your DOM somewher
 
 # Possible uses
 
-This was created as part of a game that [Jon](https://github.com/jf8073) and I are developing, and it's quite good for games where a lot of things will be happening at different rates and you need a simple API for managing it.
+This was created as part of a game that [Jon](https://github.com/jonfinerty) and I are developing, and it's quite good for games where a lot of things will be happening at different rates and you need a simple API for managing it.
 
 You can also recreate the XKCD Frequency comic, like so: [Show me the demo](http://basicallydan.github.io/eventedloop/xkcd-example/).
 
