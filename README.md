@@ -1,7 +1,7 @@
 EventedLoop
 ============
 
-An event-based loop class which can take arbitrary numbers of intervals/callback pairs. Based on [Node.js EventEmitter](http://nodejs.org/api/events.html).
+An event-based loop class which can take arbitrary numbers of intervals/callback pairs. Based on [Node.js EventEmitter](http://nodejs.org/api/events.html). Created [with game loops in mind](http://danielhough.co.uk/blog/a-simple-game-loop/).
 
 It's very simple:
 
