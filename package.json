@@ -1,6 +1,6 @@
 {
   "name": "eventedloop",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An event-based loop creator which can take arbitrary numbers of intervals and callbacks",
   "main": "./lib/main.js",
   "scripts": {
