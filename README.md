@@ -76,6 +76,19 @@ Download `eventedloop.min.js` or `eventedloop.js` and stick it your DOM somewher
 
 This was created as part of a game that [Jon](https://github.com/jonfinerty) and I are developing, and it's quite good for games where a lot of things will be happening at different rates and you need a simple API for managing it.
 
+## A Game Loop Example
+
+If you'd like to create a game loop, here's a really simple example of how you can do so, taken from [the main game file in my SkiFree port](https://github.com/basicallydan/skifree.js/blob/master/js/lib/game.js):
+
+```
+var gameLoop = new EventedLoop();
+gameLoop.on('20ms', game.draw);
+gameLoop.on('20ms', game.update);
+gameLoop.start();
+```
+
+## Other things
+
 You can also recreate the XKCD Frequency comic, like so: [Show me the demo](http://basicallydan.github.io/eventedloop/xkcd-example/).
 
 It's also a nice, cleaner version of `setInterval` which can be turned on and off at will.
