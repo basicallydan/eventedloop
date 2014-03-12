@@ -37,9 +37,26 @@ loop.every('2m', function (e) {
 
 You can do as many as you like, but I highly recommend you take it easy an don't overdo it. In newer versions of Chrome, 50 intervals seems to have no detrimental effects, but of course it depends on what is happening in the callback. An example of a situation with 50 intervals is available in [this demo](https://basicallydan.github.io/eventedloop/xkcd-example/).
 
+You can also remove events, and even do it after the loop has started!
+
+```js
+var EventedLoop = require('eventedloop'); // Only relevant if you're using Node or Browserify
+var loop = new EventedLoop();
+loop.every('2s', function (e) {
+  console.log('Every 2 seconds I will run');
+});
+var oneMinuteEvent = loop.every('1m', function (e) {
+  console.log('Every 1 minute I will run');
+});
+loop.start();
+// You can even add new intervals after it starts running
+oneMinuteEvent.remove(); // The console.log happening once a minute no longer happens
+```
+
 ## API
 
-* `loop.every(interval, callback)` - Tell the loop to execute the `callback` regularly at whatever time was specified in `interval`, which can either be milliseconds (e.g. `2ms`), seconds (e.g. `5s`), minutes (e.g. `10m`), or hours (`1h`)
+* `loop.every(interval, callback)` - Tell the loop to execute the `callback` regularly at whatever time was specified in `interval`, which can either be milliseconds (e.g. `2ms`), seconds (e.g. `5s`), minutes (e.g. `10m`), or hours (`1h`). Returns an object with the follow method:
+  * `event.remove()` - remove this event from the loop, so it will no longer take place
 * `loop.start()` - Starts the loop.
 * `loop.stop()` - Stops the loop. Will not clear out all the intervals, this can be done with the inherited method from `EventEmitter`, `loop.removeAllListeners`.
 * `loop.tick()` - This will cause a single iteration at the greatest common factor of time for all the given intervals, i.e., if you have two intervals at `50ms` and `75ms`, a single tick will be `25ms`. This is useful for debugging, and for mimicing slowed-down time.
