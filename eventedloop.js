@@ -171,6 +171,17 @@
 		return !!this.intervalId;
 	};
 
+	EventedLoop.prototype.on = function () {
+		var eventName = arguments[0];
+		var eventCallback = arguments[1];
+		EventEmitter.prototype.on.apply(this, arguments);
+		var o = {
+			remove: EventedLoop.prototype.removeListener.bind(this, eventName, eventCallback)
+		};
+
+		return o;
+	};
+
 	EventedLoop.prototype.every = EventedLoop.prototype.on;
 
     // Export the EventedLoop object for **Node.js** or other

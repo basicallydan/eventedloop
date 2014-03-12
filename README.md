@@ -122,6 +122,12 @@ Build using [Browserify](http://browserify.org/):
 browserify lib/main.js -o eventedloop.js
 ```
 
+And minify with [UglifyJS2](https://github.com/mishoo/UglifyJS2)
+
+```
+browserify lib/main.js | uglifyjs > eventedloop.min.js
+```
+
 # Contributions
 
 Please, please, please feel free to [open an issue](https://github.com/basicallydan/eventedloop/issues) or fork this sucker and give it a pull request. It's a pretty cool little library but it could definitely do with some love, it was knocked together in a couple of hours during a heated evening in the mountains.

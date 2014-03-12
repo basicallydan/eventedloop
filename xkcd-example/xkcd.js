@@ -206,9 +206,10 @@ $('document').ready(function () {
 	var eventsDiv = $('.events');
 
 	function addEvent(name, frequency) {
-		var newDiv = $('<div class="event"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
+		var newDiv = $('<div class="event" title="Click me to remove me"><div class="text">' + name + '</div></div>').appendTo(eventsDiv);
+		var newEvent;
 		try {
-			loop.every(frequency, function (event, milliseconds) {
+			newEvent = loop.every(frequency, function (event, milliseconds) {
 				newDiv.animate({
 					color: '#000000'
 				}, Math.min(500, milliseconds) * 0.3, function () {
@@ -216,6 +217,10 @@ $('document').ready(function () {
 						color: '#dddddd'
 					}, Math.min(500, milliseconds) * 0.3);
 				});
+			});
+			newDiv.click(function () {
+				newEvent.remove();
+				$(this).fadeOut().remove();
 			});
 		} catch (e) {
 			newDiv.remove();
